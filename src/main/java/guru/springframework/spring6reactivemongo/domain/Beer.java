@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 @Document
 public class Beer {
+
     @Id
     private String id;
     private String beerName;
@@ -24,6 +25,7 @@ public class Beer {
     private String upc;
     private Integer quantityOnHand;
     private BigDecimal price;
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
+
 }

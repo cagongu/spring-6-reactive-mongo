@@ -15,13 +15,13 @@ import static java.util.Collections.singletonList;
 public class MongoConfig extends AbstractReactiveMongoConfiguration {
 
     @Bean
-    public MongoClient mongoClient(){
+    public MongoClient mongoClient() {
         return MongoClients.create();
     }
 
     @Override
     protected String getDatabaseName() {
-        return "Sfg";
+        return "sfg";
     }
 
     @Override

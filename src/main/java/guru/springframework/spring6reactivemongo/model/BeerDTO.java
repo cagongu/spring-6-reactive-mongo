@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class BeerDTO {
+
     private Integer id;
 
     @NotBlank
@@ -28,6 +29,6 @@ public class BeerDTO {
     private String upc;
     private Integer quantityOnHand;
     private BigDecimal price;
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 }
