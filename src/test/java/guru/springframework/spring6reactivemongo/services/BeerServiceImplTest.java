@@ -8,10 +8,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static org.awaitility.Awaitility.await;
 
 @SpringBootTest
 class BeerServiceImplTest {
@@ -29,17 +32,20 @@ class BeerServiceImplTest {
     }
 
     @Test
-    void saveBeer() throws InterruptedException {
+    void saveBeer() {
+
+        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
 
         Mono<BeerDTO> savedMono = beerService.saveBeer(Mono.just(beerDTO));
 
         savedMono.subscribe(savedDto -> {
             System.out.println(savedDto.getId());
+            atomicBoolean.set(true);
         });
 
-        Thread.sleep(1000l);
-    }
+        await().untilTrue(atomicBoolean);
 
+    }
     public static Beer getTestBeer() {
         return Beer.builder()
                 .beerName("Space Dust")

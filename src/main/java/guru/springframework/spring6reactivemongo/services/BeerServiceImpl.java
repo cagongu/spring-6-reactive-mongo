@@ -3,7 +3,6 @@ package guru.springframework.spring6reactivemongo.services;
 import guru.springframework.spring6reactivemongo.mappers.BeerMapper;
 import guru.springframework.spring6reactivemongo.model.BeerDTO;
 import guru.springframework.spring6reactivemongo.repositories.BeerRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
