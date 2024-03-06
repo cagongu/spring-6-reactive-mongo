@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
@@ -37,6 +38,30 @@ class BeerServiceImplTest {
     @BeforeEach
     void setUp() {
         beerDTO = beerMapper.beerToBeerDto(getTestBeer());
+    }
+
+    @Test
+    void testListBeers() {
+        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+        beerService.listbeers().subscribe(
+                dto -> {
+                    System.out.println(dto.toString());
+                    atomicBoolean.set(true);
+                }
+        );
+        await().untilTrue(atomicBoolean);
+    }
+
+    @Test
+    void testFindByBeerStyle() {
+        BeerDTO beerDTO1 = getSavedBeerDto();
+        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+        beerService.findByBeerStyle(beerDTO1.getBeerStyle())
+                .subscribe(dto -> {
+                    System.out.println(dto.toString());
+                    atomicBoolean.set(true);
+                });
+        await().untilTrue(atomicBoolean);
     }
 
     @Test
