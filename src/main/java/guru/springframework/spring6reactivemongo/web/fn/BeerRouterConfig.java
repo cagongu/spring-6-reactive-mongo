@@ -3,7 +3,6 @@ package guru.springframework.spring6reactivemongo.web.fn;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
@@ -24,6 +23,7 @@ public class BeerRouterConfig {
         return route()
                 .GET(BEER_PATH, accept(APPLICATION_JSON), handler::listBeers)
                 .GET(BEER_PATH_ID, accept(APPLICATION_JSON), handler::getBeerById)
+                .POST(BEER_PATH, accept(APPLICATION_JSON), handler::createNewBeer)
                 .build();
     }
 }
