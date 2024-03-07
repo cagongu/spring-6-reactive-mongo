@@ -1,6 +1,7 @@
 package guru.springframework.spring6reactivemongo.web.fn;
 
 
+import com.sun.source.tree.BreakTree;
 import guru.springframework.spring6reactivemongo.model.BeerDTO;
 import guru.springframework.spring6reactivemongo.services.BeerService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebInputException;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Component
@@ -75,7 +77,14 @@ public class BeerHandler {
     }
 
     public Mono<ServerResponse> listBeers(ServerRequest request) {
+        Flux<BeerDTO> flux;
+
+        if (request.queryParam("beerStyle").isPresent())
+            flux = beerService.findByBeerStyle(request.queryParam("beerStyle").get());
+        else flux = beerService.listbeers();
+
         return ServerResponse.ok()
-                .body(beerService.listbeers(), BeerDTO.class);
+                .body(flux, BeerDTO.class);
     }
+
 }
